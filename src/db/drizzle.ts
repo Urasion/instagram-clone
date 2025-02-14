@@ -1,5 +1,6 @@
-import { neon } from '@neondatabase/serverless';
-import { drizzle } from 'drizzle-orm/neon-http';
-
-const client = neon(process.env.SUPA_DATABASE_URL!);
+import { config } from 'dotenv';
+import { drizzle } from 'drizzle-orm/postgres-js';
+import postgres from 'postgres';
+config({ path: '.env' });
+const client = postgres(process.env.SUPA_DATABASE_URL!);
 export const db = drizzle({ client });
