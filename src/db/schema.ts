@@ -11,3 +11,6 @@ export const usersTable = pgTable('users_table', {
   name: text('name').notNull(),
   password: text('password').notNull(),
 });
+
+export type InsertUser = typeof usersTable.$inferInsert;
+export type SelectUser = typeof usersTable.$inferSelect;
