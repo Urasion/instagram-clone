@@ -5,4 +5,22 @@ import { db } from './db/drizzle';
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: DrizzleAdapter(db),
   providers: [],
+  session: {
+    strategy: 'jwt',
+  },
+  pages: {
+    signIn: '/sign-in',
+    error: '/sign-in',
+  },
+  callbacks: {
+    signIn: async () => {
+      return true;
+    },
+    jwt: async ({ token, user }) => {
+      return { token, user };
+    },
+    session: async ({ session }) => {
+      return session;
+    },
+  },
 });
