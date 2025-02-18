@@ -11,15 +11,26 @@ import {
 import { useForm } from 'react-hook-form';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
+import { signInWithCredentials } from '@/server-action/auth';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { loginSchema } from '@/lib/zod';
+import { SignIn } from '@/type';
 
 export default function LoginForm() {
-  const form = useForm();
+  const form = useForm<SignIn>({
+    resolver: zodResolver(loginSchema),
+  });
   return (
-    <div className="p-3 border rounded-lg space-y-4">
-      <Form {...form}>
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit((data) => {
+          signInWithCredentials(data);
+        })}
+        className="p-3 rounded-lg border space-y-4"
+      >
         <FormField
           control={form.control}
-          name="id"
+          name="email"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Username or email address</FormLabel>
@@ -45,16 +56,20 @@ export default function LoginForm() {
                   placeholder="Password.."
                   {...field}
                   className="w-72 h-8 focus-visible:ring-blue-500"
+                  type="password"
                 />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-      </Form>
-      <Button className="w-72 h-8 font-bold bg-green-500 hover:bg-green-600">
-        Sign in
-      </Button>
-    </div>
+        <Button
+          className="w-72 h-8 font-bold bg-green-500 hover:bg-green-600"
+          type="submit"
+        >
+          Sign in
+        </Button>
+      </form>
+    </Form>
   );
 }

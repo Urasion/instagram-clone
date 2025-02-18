@@ -1,9 +1,13 @@
 import { eq } from 'drizzle-orm';
 import { db } from '../drizzle';
-import { SelectUser, usersTable } from '../schema';
+import { users } from '../schema';
+import { User } from '@/type';
 
-export async function getUserById(
-  id: SelectUser['id']
-): Promise<Array<{ id: number; name: string; password: string }>> {
-  return db.select().from(usersTable).where(eq(usersTable.id, id));
+export async function getUserByEmail(email: string): Promise<User> {
+  const result = await db
+    .select()
+    .from(users)
+    .where(eq(users.email, email))
+    .limit(1);
+  return result[0];
 }
