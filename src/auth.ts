@@ -1,8 +1,10 @@
 import { DrizzleAdapter } from '@auth/drizzle-adapter';
-import NextAuth from 'next-auth';
+import NextAuth, { NextAuthConfig } from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import bcrypt from 'bcryptjs';
 import { db } from './db/drizzle';
+import { eq } from 'drizzle-orm';
+import { users } from './db/schema';
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: DrizzleAdapter(db),
   providers: [
@@ -17,15 +19,17 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           email: string;
           password: string;
         };
-        const response = await fetch(`http://localhost:3000/api/user/${email}`);
-        if (!response.ok) {
-          throw new Error(`Failed to fetch user: ${response.statusText}`);
+        const query = await db
+          .select()
+          .from(users)
+          .where(eq(users.email, email));
+        user = query[0];
+        if (!user || !user.password) {
+          return null;
         }
-        user = await response.json();
-
         const passwordMatched = await bcrypt.compare(password, user.password);
         if (!passwordMatched) {
-          throw new Error(`Invalid Password`);
+          return null;
         }
         return user;
       },
@@ -41,22 +45,18 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   callbacks: {
     jwt: async ({ token, user }) => {
       if (user) {
-        return {
-          ...token,
-          id: user.id,
-        };
+        token.name = user.name;
+        token.email = user.email;
       }
-      return { token };
+      return token;
     },
     session: async ({ session, token }) => {
-      return {
-        ...session,
-        user: {
-          ...session.user,
-          id: token.id,
-        },
-      } as typeof session;
+      if (token) {
+        session.user.name = token.name;
+        session.user.email = token.email as string;
+      }
+      return session;
     },
   },
-  secret: process.env.NEXT_PUBLIC_SECRET,
-});
+  secret: process.env.AUTH_SECRET,
+} satisfies NextAuthConfig);
