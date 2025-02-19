@@ -2,7 +2,7 @@ import React from 'react';
 import SignUpForm from './SignUpForm';
 import Link from 'next/link';
 import { LucideArrowRight } from 'lucide-react';
-export default function SignupPaper() {
+export default function SignUpPaper() {
   return (
     <div className="flex flex-col flex-auto items-center gap-10">
       <div className="w-full flex justify-end text-gray-600 text-sm space-x-3 p-6">
