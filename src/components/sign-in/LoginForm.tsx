@@ -73,7 +73,7 @@ export default function LoginForm() {
           )}
         />
         <Button
-          className="w-72 h-8 font-bold bg-green-500 hover:bg-green-600"
+          className="w-72 h-8 font-bold bg-black hover:bg-gray-900/80"
           type="submit"
         >
           Sign in
