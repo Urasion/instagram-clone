@@ -9,28 +9,12 @@ export const signInWithCredentials = async (form: SignIn) => {
       password: form.password || '',
       redirect: true,
       redirectTo: '/',
-      // redirectTo: '/' // 로그인 후 메인 페이지로 이동!
     });
+    return true;
   } catch (error) {
     if (error instanceof AuthError) {
-      switch (error.type) {
-        case 'CallbackRouteError':
-          if (
-            error.cause &&
-            typeof error.cause === 'object' &&
-            'err' in error.cause
-          ) {
-            const cause = error.cause as { err: { code?: string } };
-            if (cause.err && cause.err.code === 'credentials') {
-              return { error: 'Invalid credentials' };
-            }
-          }
-        default:
-          return { error: 'An authentication error occurred' };
-      }
+      throw new Error('Incorrect username or password.');
     }
-
-    throw error;
   }
 };
 export const signOutWithForm = async () => {

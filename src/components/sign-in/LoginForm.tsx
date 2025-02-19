@@ -15,28 +15,37 @@ import { signInWithCredentials } from '@/server-action/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema } from '@/lib/zod';
 import { SignIn } from '@/type';
+import useToast from '@/hook/useToast';
 
 export default function LoginForm() {
   const form = useForm<SignIn>({
     resolver: zodResolver(loginSchema),
   });
+  const { toast } = useToast();
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit((data) => {
-          signInWithCredentials(data);
+        onSubmit={form.handleSubmit(async (data) => {
+          try {
+            await signInWithCredentials(data);
+          } catch (err) {
+            if (err instanceof Error) {
+              toast('warning', err.message);
+              form.setError('root', err);
+            }
+          }
         })}
-        className="p-3 rounded-lg border space-y-4"
+        className="space-y-4"
       >
         <FormField
           control={form.control}
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username or email address</FormLabel>
+              <FormLabel>Email</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Username.."
+                  placeholder="Email"
                   {...field}
                   className="w-72 h-8 focus-visible:ring-blue-500"
                 />
@@ -53,7 +62,7 @@ export default function LoginForm() {
               <FormLabel>Password</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Password.."
+                  placeholder="Password"
                   {...field}
                   className="w-72 h-8 focus-visible:ring-blue-500"
                   type="password"
