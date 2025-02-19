@@ -3,6 +3,7 @@ import React from 'react';
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -28,7 +29,7 @@ export default function SignUpForm() {
                 <Input
                   placeholder="Email"
                   {...field}
-                  className="w-72 h-8 focus-visible:ring-blue-500"
+                  className="w-[420px] h-10 focus-visible:ring-black"
                 />
               </FormControl>
               <FormMessage />
@@ -45,11 +46,14 @@ export default function SignUpForm() {
                 <Input
                   placeholder="Password"
                   {...field}
-                  className="w-72 h-8 focus-visible:ring-blue-500"
+                  className="w-[420px] h-10 focus-visible:ring-black"
                   type="password"
                 />
               </FormControl>
               <FormMessage />
+              <FormDescription>
+                Password should be at least 8 characters
+              </FormDescription>
             </FormItem>
           )}
         />
@@ -61,10 +65,9 @@ export default function SignUpForm() {
               <FormLabel>Username</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Password"
+                  placeholder="Username"
                   {...field}
-                  className="w-72 h-8 focus-visible:ring-blue-500"
-                  type="password"
+                  className="w-[420px] h-10 focus-visible:ring-blue-500"
                 />
               </FormControl>
               <FormMessage />
@@ -72,10 +75,10 @@ export default function SignUpForm() {
           )}
         />
         <Button
-          className="w-72 h-8 font-bold bg-green-500 hover:bg-green-600"
+          className="w-[420px] h-10 font-bold bg-black hover:bg-gray-900/80"
           type="submit"
         >
-          Sign in
+          Continue
         </Button>
       </form>
     </Form>
