@@ -10,7 +10,6 @@ import {
   FormMessage,
 } from '../ui/form';
 import { useForm } from 'react-hook-form';
-
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { LucideChevronRight } from 'lucide-react';
@@ -23,7 +22,7 @@ export default function SignUpForm() {
   });
   return (
     <Form {...form}>
-      <form onSubmit={() => {}} className="flex flex-col flex-auto space-y-4">
+      <form className="flex flex-col flex-auto space-y-4">
         <FormField
           control={form.control}
           name="email"
