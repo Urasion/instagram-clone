@@ -8,7 +8,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
     Credentials({
       credentials: {
-        email: { label: 'email', type: 'text', placeholder: 'email' },
+        email: { label: 'email', type: 'email' },
         password: { label: 'password ', type: 'password' },
       },
       authorize: async (credentials) => {
