@@ -13,9 +13,14 @@ import { useForm } from 'react-hook-form';
 
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
-
+import { LucideChevronRight } from 'lucide-react';
+import { SignUp } from '@/type';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { signUpSchema } from '@/lib/zod';
 export default function SignUpForm() {
-  const form = useForm();
+  const form = useForm<SignUp>({
+    resolver: zodResolver(signUpSchema),
+  });
   return (
     <Form {...form}>
       <form onSubmit={() => {}} className="flex flex-col flex-auto space-y-4">
@@ -75,10 +80,11 @@ export default function SignUpForm() {
           )}
         />
         <Button
-          className="w-[420px] h-10 font-bold bg-black hover:bg-gray-900/80"
+          className="w-[420px] h-10 font-bold bg-black hover:bg-gray-900/80 flex items-center"
           type="submit"
         >
-          Continue
+          <span className="h-full">Continue</span>
+          <LucideChevronRight />
         </Button>
       </form>
     </Form>
