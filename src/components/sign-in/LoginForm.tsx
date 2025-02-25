@@ -11,11 +11,11 @@ import {
 import { useForm } from 'react-hook-form';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
-import { signInWithCredentials } from '@/server-action/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema } from '@/lib/zod';
 import { SignIn } from '@/type';
 import useToast from '@/hook/useToast';
+import { signInWithCredentials } from '@/service/auth';
 
 export default function LoginForm() {
   const form = useForm<SignIn>({

@@ -1,14 +1,15 @@
-import { Context, Hono } from 'hono';
+import { Hono } from 'hono';
 import { handle } from 'hono/vercel';
 import { HTTPException } from 'hono/http-exception';
 import { AuthConfig, initAuthConfig } from '@hono/auth-js';
 import { getUserByEmail } from '@/db/queries/select';
 import { user } from './user';
 import { authConfig } from '@/auth.config';
+import 'dotenv/config';
 export const runtime = 'nodejs';
-function getAuthConfig(c: Context): AuthConfig {
+function getAuthConfig(): AuthConfig {
   return {
-    secret: c.env.AUTH_SECRET,
+    secret: process.env.AUTH_SECRET,
     ...authConfig,
   };
 }
