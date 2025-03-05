@@ -16,28 +16,16 @@ import { LucideChevronRight } from 'lucide-react';
 import { SignUp } from '@/type';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signUpSchema } from '@/lib/zod';
-import { signUp } from '@/service/auth';
-import { useRouter } from 'next/navigation';
-import { useMutation } from '@tanstack/react-query';
 export default function SignUpForm() {
   const form = useForm<SignUp>({
     resolver: zodResolver(signUpSchema),
-  });
-  const router = useRouter();
-  const { mutate } = useMutation({
-    mutationFn: () => signUp(form.getValues()),
-    onSuccess: () => {
-      router.push('/sign-in');
-    },
   });
 
   return (
     <Form {...form}>
       <form
         className="flex flex-col flex-auto space-y-4"
-        onSubmit={form.handleSubmit(() => {
-          mutate();
-        })}
+        onSubmit={form.handleSubmit(() => {})}
       >
         <FormField
           control={form.control}

@@ -3,7 +3,8 @@ import { SessionProvider } from 'next-auth/react';
 import { Noto_Sans_KR } from 'next/font/google';
 import './globals.css';
 import { auth } from '@/auth';
-import { Toaster } from '@/components/ui/toaster';
+import Providers from '../components/provider/query-provider';
+import { Toaster } from '../components/ui/toaster';
 
 const notoSansKr = Noto_Sans_KR({
   weight: ['500'],
@@ -26,8 +27,10 @@ export default async function RootLayout({
     <SessionProvider session={session}>
       <html lang="en" className="h-screen flex flex-col">
         <body className={`${notoSansKr.className} grow`}>
-          <Toaster />
-          {children}
+          <Providers>
+            <Toaster />
+            {children}
+          </Providers>
         </body>
       </html>
     </SessionProvider>

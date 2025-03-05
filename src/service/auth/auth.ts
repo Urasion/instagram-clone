@@ -1,8 +1,7 @@
 'use server';
 import { auth, signIn, signOut } from '@/auth';
-import { SignIn, SignUp } from '@/type';
+import { SignIn } from '@/type';
 import { AuthError } from 'next-auth';
-import { instance } from './axios';
 export const signInWithCredentials = async (form: SignIn) => {
   try {
     await signIn('credentials', {
@@ -22,13 +21,3 @@ export const signOutWithForm = async () => {
   await signOut();
 };
 export { auth as getSession };
-
-export const signUp = async (form: SignUp) => {
-  const { email, password, username } = form;
-  const result = instance.post('/user/sign-up', {
-    email,
-    password,
-    username,
-  });
-  return result;
-};
