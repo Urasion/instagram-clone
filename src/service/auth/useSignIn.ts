@@ -1,18 +1,21 @@
-import { ErrorType, SignUp } from '@/type';
-import { useMutation } from '@tanstack/react-query';
-import { instance } from '../axios';
-import { useRouter } from 'next/navigation';
+import { signIn } from '@/auth';
 import useToast from '@/hook/useToast';
+import { ErrorType, SignIn } from '@/type';
+import { useMutation } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 
-export default function useSignUp() {
+export default function useSignIn() {
   const navigate = useRouter();
   const { toast } = useToast();
   const mutate = useMutation({
-    mutationFn: async (form: SignUp) => {
-      await instance.post('/user/sign-up', form);
+    mutationFn: async (form: SignIn) => {
+      await signIn('credentials', {
+        email: form.email || '',
+        password: form.password || '',
+      });
     },
     onSuccess: () => {
-      navigate.push('/sign-in');
+      navigate.push('/');
     },
     onError: (error: ErrorType) => {
       toast('warning', error.response.data);

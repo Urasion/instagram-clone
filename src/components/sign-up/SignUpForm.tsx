@@ -16,16 +16,20 @@ import { LucideChevronRight } from 'lucide-react';
 import { SignUp } from '@/type';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signUpSchema } from '@/lib/zod';
+import useSignUp from '@/service/auth/useSignUp';
 export default function SignUpForm() {
   const form = useForm<SignUp>({
     resolver: zodResolver(signUpSchema),
   });
+  const { mutate: signUp } = useSignUp();
 
   return (
     <Form {...form}>
       <form
         className="flex flex-col flex-auto space-y-4"
-        onSubmit={form.handleSubmit(() => {})}
+        onSubmit={form.handleSubmit((data) => {
+          signUp(data);
+        })}
       >
         <FormField
           control={form.control}

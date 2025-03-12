@@ -14,26 +14,18 @@ import { Button } from '../ui/button';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema } from '@/lib/zod';
 import { SignIn } from '@/type';
-import useToast from '@/hook/useToast';
-import { signInWithCredentials } from '@/service/auth';
+import useSignIn from '@/service/auth/useSignIn';
 
 export default function LoginForm() {
   const form = useForm<SignIn>({
     resolver: zodResolver(loginSchema),
   });
-  const { toast } = useToast();
+  const { mutate: signIn } = useSignIn();
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(async (data) => {
-          try {
-            await signInWithCredentials(data);
-          } catch (err) {
-            if (err instanceof Error) {
-              toast('warning', err.message);
-              form.setError('root', err);
-            }
-          }
+          signIn(data);
         })}
         className="space-y-4"
       >

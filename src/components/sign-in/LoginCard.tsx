@@ -5,7 +5,7 @@ import LoginForm from './LoginForm';
 export default function LoginCard() {
   return (
     <div className="flex flex-col items-center p-4 rounded-lg border gap-4">
-      <h1 className="text-2xl font-bold">Sign in to Continue</h1>
+      <h1 className="text-xl font-bold">Sign in to Continue</h1>
       <LoginForm />
       <div className="w-full flex items-center justify-center relative my-4">
         <div className="w-14 h-[0.5px] bg-gray-400 absolute left-2 top-3" />

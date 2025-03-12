@@ -2,9 +2,9 @@ import type { Metadata } from 'next';
 import { SessionProvider } from 'next-auth/react';
 import { Noto_Sans_KR } from 'next/font/google';
 import './globals.css';
-import { auth } from '@/auth';
 import Providers from '../components/provider/query-provider';
 import { Toaster } from '../components/ui/toaster';
+import { getSession } from '@/service/auth/auth';
 
 const notoSansKr = Noto_Sans_KR({
   weight: ['500'],
@@ -21,8 +21,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await auth();
-
+  const session = await getSession();
   return (
     <SessionProvider session={session}>
       <html lang="en" className="h-screen flex flex-col">
