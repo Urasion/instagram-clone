@@ -33,7 +33,7 @@ export default function SidebarList({ isDrawerOpen, setIsDrawerOpen }: Props) {
     [user]
   );
   return (
-    <ul className="w-full h-full flex flex-col items-center space-y-2">
+    <ul className="w-full h-full flex flex-col items-center space-y-2 bg-rose-300">
       {menus.map((menu) => (
         <SidebarItem
           key={`menu-${menu.value}`}

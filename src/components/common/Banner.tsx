@@ -9,8 +9,8 @@ export default function Banner({ isDrawerOpen }: Props) {
   return (
     <div
       className={cn(
-        'w-full h-12 relative rounded-lg text-white active:text-gray-700/60 hover:bg-gray-700/60 xl:hover:bg-transparent',
-        isDrawerOpen && 'hover:bg-gray-700/60'
+        'w-full h-14 relative rounded-lg text-white active:text-gray-700/60 hover:bg-gray-700/60 xl:hover:bg-transparent',
+        isDrawerOpen && 'hover:xl:bg-gray-700/60'
       )}
       onClick={() => {
         navigate.push('home');
@@ -19,7 +19,7 @@ export default function Banner({ isDrawerOpen }: Props) {
       {
         <span
           className={cn(
-            'absolute left-6 top-2 text-2xl duration-300 italic',
+            'absolute left-6 top-0.5 text-2xl duration-300 italic',
             isDrawerOpen ? 'opacity-0' : 'xl:opacity-100 opacity-0'
           )}
         >
@@ -28,7 +28,7 @@ export default function Banner({ isDrawerOpen }: Props) {
       }
       <LucideInstagram
         className={cn(
-          'absolute left-3 top-3 transition-transform duration-300',
+          'absolute left-3 top-[9px] transition-transform duration-300',
           isDrawerOpen
             ? '!size-6'
             : 'translate-x-0 translate-y-0 xl:translate-x-1 xl:translate-y-1 !size-6 scale-100 xl:scale-0  '
